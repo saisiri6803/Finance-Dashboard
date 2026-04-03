@@ -11,6 +11,7 @@ Backend for a finance Dashboard system built with Java, SpringBoot, Spring Secur
 - Access Control
 
 ## Features Implemented
+##### User and Role Management
 - Create and manage users
 - Assign roles to users
 - Manage user active/inactive status
@@ -18,6 +19,16 @@ Backend for a finance Dashboard system built with Java, SpringBoot, Spring Secur
 - Generate JWT token after login
 - Restrict access based on roles
 - Return validation and error responses in a consistent format
+##### Financial Record Management
+- Create and manage financial records
+- View all financial records
+- View Single record by id
+- Update and delete records
+- Filter records by:
+  - type
+  - category
+  - stateDate
+  - endDate
 
 
 ## Role Model
@@ -66,6 +77,37 @@ Configured in `SecurityConfig.java`.
 - `/api/dashboard/insights/**` -> `ANALYST`, `ADMIN`
 - Record write endpoints -> `ADMIN` only
 
+
+## EndPoints
+### Authentication
+
+All protected endpoints require a Bearer token.
+`Authorization: Bearer <token>` Required for access
+### User Authentication, Authorization and Registration
+
+| Method | EndPoint | Description |
+|--------|----------|-------------|
+| POST | `/api/login` | Login with User credentials |
+| POST | `/api/register` | Register as User |
+| GET | `/api/users` | Get all Users |
+| GET | `/api/users/{id}` | Get User by id |
+
+
+### Financial records
+
+| Method | EndPoint | Description |
+|--------|----------|-------------|
+| POST | `/api/records` | Create a financial record |
+| GET | `/api/records` | Get all records with optional filters |
+| GET | `/api/records/{id}` | Get record by ID |
+| PUT | `/api/records/{id}` | Update record |
+| DELETE | `/api/records/{id}` | Delete record |
+
+#### Example Filter Usage
+```http
+GET /api/records?type=INCOME&category=Salary&startDate=2026-01-01&endDate=2026-03-31
+```
+
 #### Default Seed Users
 
 The application creates these users on startup:
@@ -111,11 +153,11 @@ Use:
 ### How to and What to test in Postman
 
 - `AuthController.java`
-    - `POST  /api/auth/login`
-    - `POST  /api/auth/request`
+  - `POST  /api/auth/login`
+  - `POST  /api/auth/request`
 
 - `UserController.java`
-    - `GET /api/users`
-    - `GET /api/users/{id}`
-    - `PUT /api/users/{id}`
-    - `DELETE /api/users/{id}`
+  - `GET /api/users`
+  - `GET /api/users/{id}`
+  - `PUT /api/users/{id}`
+  - `DELETE /api/users/{id}`
